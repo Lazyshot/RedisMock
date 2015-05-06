@@ -317,9 +317,7 @@ class RedisMock
             return $this->returnPipedInfo(null);
         }
 
-        $idx = array_rand(self::$data[$key]);
-        
-        return $this->returnPipedInfo(self::$data[$key][$idx]);
+        return $this->returnPipedInfo(array_shift(self::$data[$key]));
     }
 
     public function sismember($key, $member)
