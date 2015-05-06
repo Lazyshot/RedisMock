@@ -311,6 +311,17 @@ class RedisMock
         return $this->returnPipedInfo(sizeof($remMembers));
     }
 
+    public function spop($key)
+    {
+        if (!isset(self::$data[$key]) || !is_array(self::$data[$key]) || $this->deleteOnTtlExpired($key)) {
+            return $this->returnPipedInfo(null);
+        }
+
+        $idx = array_rand(self::$data[$key]);
+        
+        return $this->returnPipedInfo(self::$data[$key][$idx]);
+    }
+
     public function sismember($key, $member)
     {
         if (!isset(self::$data[$key]) || !in_array($member, self::$data[$key]) || $this->deleteOnTtlExpired($key)) {
